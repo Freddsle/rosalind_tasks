@@ -1,6 +1,10 @@
 #Complementing a Strand of DNA http://rosalind.info/problems/revc/
-file = open("rosalind_revc.txt", "r")
-dna_text = file.read().strip('/n')
-replacements = {"A": "T", "G": "C", "C": "G", "T": "A"}
-coml_dna = "".join([replacements.get(c, c) for c in dna_text])
-print(coml_dna[::-1])
+with open("rosalind_revc.txt", "r") as f: 
+    dna_text = f.read().strip('\n')
+
+replacements = {"A": "T", 
+                "G": "C", 
+                "C": "G", 
+                "T": "A"}
+coml_dna = "".join([replacements[c] for c in reversed(dna_text)])
+print(coml_dna)
