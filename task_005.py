@@ -1,13 +1,13 @@
 # Computing GC Content http://rosalind.info/problems/gc/
-file = open("rosalind_gc.txt", "r")
-line = file.read().strip('>').split('>')
-GC = dict()
+with open("rosalind_gc.txt", "r") as f:
+    line = f.read().strip('>').split('>')
+
+GC = {}
 
 for i in line:
     name, seq = i.split('\n', 1)
     seq = seq.replace('\n', '')
-    GC[name] = ((seq.count('C') + seq.count('G')) / len(seq))*100
+    GC[name] = ((seq.count('C') + seq.count('G')) / len(seq))
 
 name_max, GC_value = max(GC.items(), key = lambda k : k[1])
-print(name_max)
-print(GC_value)
+print('{}\n{}'.format(name_max,GC_value*100))
