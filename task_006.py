@@ -1,8 +1,6 @@
 #Counting Point Mutations http://rosalind.info/problems/hamm/
-file = open("rosalind_hamm.txt", "r")
-s, t = file.read().split()
-dH = 0
-for i in range(len(s)):
-    if s[i] != t[i]:
-        dH += 1
+with open("rosalind_hamm.txt", "r") as f:
+    s, t = f.read().split()
+
+dH = sum(1 for x, y in zip(s, t) if x != y)
 print(dH)
