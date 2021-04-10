@@ -10,34 +10,27 @@ for i in line:
     data[name] = seq
     ls = len(seq)
 
-A, C, G, T = [0] * ls, [0] * ls, [0] * ls, [0] * ls
+Profile = {'A': [0] * ls,
+           'C': [0] * ls,
+           'G': [0] * ls,
+           'T': [0] * ls}
 
 for seq in data:
-    for i in range(len(data[seq])):
-        if data[seq][i] == 'A':
-            A[i] = A[i]+1
-            C[i], G[i], T[i] = C[i]+0, G[i]+0, T[i]+0
-        elif data[seq][i] == 'T':
-            T[i] += 1
-            C[i], G[i], A[i] = C[i]+0, G[i]+0, A[i]+0
-        elif data[seq][i] == 'C':
-            C[i] += 1
-            A[i], G[i], T[i] = A[i]+0, G[i]+0, T[i]+0
-        elif data[seq][i] == 'G':
-            G[i] += 1
-            C[i], A[i], T[i] = C[i]+0, A[i]+0, T[i]+0
+    for i, c in enumerate(data[seq]):
+        Profile[c][i] += 1
 
 alphabet = ['A', 'C', 'G', 'T']
 answer = ''
-for i in range(len(A)):
-    l = (A[i],C[i],G[i],T[i])
+
+for i in range(len(Profile['A'])):
+    l = (Profile['A'][i],Profile['C'][i],Profile['G'][i], Profile['T'][i])
     index = l.index(max(l))
     answer += alphabet[index]
 
 with open("myfile.txt", "w") as f:
     print(answer, 
-        '\nA: ', *A, 
-        '\nC: ', *C, 
-        '\nG: ', *G, 
-        '\nT: ', *T, 
+        '\nA: ', *Profile['A'], 
+        '\nC: ', *Profile['C'], 
+        '\nG: ', *Profile['G'], 
+        '\nT: ', *Profile['T'], 
         file=f)
