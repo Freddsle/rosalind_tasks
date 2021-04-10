@@ -1,7 +1,8 @@
 #Consensus and Profile http://rosalind.info/problems/cons/
-file = open("rosalind_cons.txt", "r")
-line = file.read().strip('>').split('>')
-data = dict()
+with open("rosalind_cons.txt", "r") as f:
+    line = f.read().strip('>').split('>')
+
+data = {}
 
 for i in line:
     name, seq = i.split('\n', 1)
@@ -27,14 +28,16 @@ for seq in data:
             C[i], A[i], T[i] = C[i]+0, A[i]+0, T[i]+0
 
 alphabet = ['A', 'C', 'G', 'T']
-answer = str()
+answer = ''
 for i in range(len(A)):
-    l = A[i],C[i],G[i],T[i]
+    l = (A[i],C[i],G[i],T[i])
     index = l.index(max(l))
     answer += alphabet[index]
 
-print(answer, file=open('myfile.txt', 'a'))
-print('A: ', *A, file=open('myfile.txt', 'a'))
-print('C: ', *C, file=open('myfile.txt', 'a'))
-print('G: ', *G, file=open('myfile.txt', 'a'))
-print('T: ', *T, file=open('myfile.txt', 'a'))
+with open("myfile.txt", "w") as f:
+    print(answer, 
+        '\nA: ', *A, 
+        '\nC: ', *C, 
+        '\nG: ', *G, 
+        '\nT: ', *T, 
+        file=f)
