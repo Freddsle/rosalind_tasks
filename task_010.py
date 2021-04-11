@@ -8,10 +8,11 @@ Profile = {'A': [0] * kb,
            'C': [0] * kb,
            'G': [0] * kb,
            'T': [0] * kb}
+prog = re.compile(r'>Rosalind_\d{4}')
 
 with open("rosalind_cons.txt", "r") as f:
     for line in f:
-        if re.match(r'>Rosalind_\d{4}', line):
+        if re.match(prog, line):
             j = 0
         else:
             for i, c in enumerate(line.strip('\n')):
