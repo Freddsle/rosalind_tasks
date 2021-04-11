@@ -2,11 +2,12 @@
 import re
 
 seq, GC = {}, {}
+prog = re.compile(r'>Rosalind_\d{4}')
 
 with open("rosalind_gc.txt", "r") as f:
     for line in f:
         line = line.strip('\n') 
-        if re.match(r'>Rosalind_\d{4}', line):
+        if re.match(prog, line):
             name = line
             seq[name] = [0, 0]               # [len line, GC in line]
         else:
