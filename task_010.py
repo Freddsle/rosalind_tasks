@@ -19,13 +19,16 @@ with open("rosalind_cons.txt", "r") as f:
             j += len(line) - 1
             
 for i in range(kb):
-    l = (Profile['A'][i], 
+    l = (Profile['A'][i],
          Profile['C'][i],
-         Profile['G'][i], 
+         Profile['G'][i],
          Profile['T'][i])
-    if sum(l) != 0:
-        index = l.index(max(l))
-        answer += alphabet[index]
+
+    if not any(l):
+        break
+
+    index = l.index(max(l))
+    answer += alphabet[index]
 
 with open("myfile.txt", "w") as f:
     print(answer,
