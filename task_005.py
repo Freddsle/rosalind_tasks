@@ -17,4 +17,4 @@ for element in seq:
     GC[element] = seq[element][1] / seq[element][0]
 
 name_max, GC_value = max(GC.items(), key = lambda k : k[1])
-print('{}\n{}'.format(name_max, GC_value * 100))
+print(f'{name_max}\n{GC_value * 100}')
