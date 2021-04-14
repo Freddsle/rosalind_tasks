@@ -1,3 +1,4 @@
+#Finding a Shared Motif http://rosalind.info/problems/lcsm/
 from Bio import SeqIO
 
 
