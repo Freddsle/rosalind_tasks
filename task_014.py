@@ -2,12 +2,10 @@
 from Bio import SeqIO
 
 
-def make_subs(string, key):
-    last_position = len(string)
+def make_subs(last_position):
     substrings = []
     for i in range(last_position):
-        if key == 'start':
-            substrings.append([i, last_position - i])
+        substrings.append([i, last_position - i])
     return substrings
 
 
@@ -28,9 +26,10 @@ def find_longes_prefix(template_string, string):
     raise NotImplementedError
   
 
-records = list(SeqIO.parse("rosalind_lcsm.txt", "fasta"))
+#records = list(SeqIO.parse("rosalind_lcsm.txt", "fasta"))
+records = list(SeqIO.parse("dna.txt", "fasta"))
 sequences = sorted([record.seq for record in records], key=len)
-start = make_subs(sequences[0], key='start')
+start = make_subs(len(sequences[0]))
 
 for string in sequences[1:]:
     subs_pair = len(string)
