@@ -26,18 +26,17 @@ def find_longes_prefix(template_string, string):
     raise NotImplementedError
   
 
-#records = list(SeqIO.parse("rosalind_lcsm.txt", "fasta"))
-records = list(SeqIO.parse("dna.txt", "fasta"))
+records = list(SeqIO.parse("rosalind_lcsm.txt", "fasta"))
 sequences = sorted([record.seq for record in records], key=len)
 start = make_subs(len(sequences[0]))
 
 for string in sequences[1:]:
     subs_pair = len(string)
-    for c, (i, j) in enumerate(start):
+    for c, (begin, lenght) in enumerate(start):
         last_pos = []
         for pair in range(subs_pair):
-            last_pos.append(find_longes_prefix(sequences[0][i:i+j], string[pair:]))
-            if last_pos[pair] == len(sequences[0][i:j+i]):
+            last_pos.append(find_longes_prefix(sequences[0][begin:begin+lenght], string[pair:]))
+            if last_pos[pair] == len(sequences[0][begin:lenght+begin]):
                 break    
         start[c][1] = max(last_pos)
 
