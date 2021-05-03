@@ -12,7 +12,7 @@ for i in range(2, n):
     for j in range(m):
         prev_step[j] = current_step[j]
         if j == 0:
-            current_step[0] = sum(current_step[k] for k in range(1, m))
+            current_step[0] = sum(current_step) - current_step[0]
         else:
             current_step[j] = prev_step[j-1]
 
