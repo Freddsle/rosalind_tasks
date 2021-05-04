@@ -1,41 +1,46 @@
 #Finding a Shared Motif http://rosalind.info/problems/lcsm/
 from Bio import SeqIO
+import itertools
 
 
-def make_subs(last_position):
-    substrings = []
-    for i in range(last_position):
-        substrings.append([i, last_position - i])
+def make_subs(sequence):
+    substrings = [sequence]
+    for i in range(len(sequence) - 1):
+        substrings.append(substrings[-1][1:])
     return substrings
 
-
-def find_longes_prefix(template_string, string):
-    for i, (letter_tem, letter_str) in enumerate(zip(template_string, string)):
-        if letter_tem != letter_str:
-            return i  
+    
+def find_longes_prefix(template_string, haystack, haystack_len, begin):
+    for i, letter_template in enumerate(template_string):
+        if haystack_len > begin+i:
+            if letter_template != haystack[begin+i]:
+                return i
     return i + 1
 
 
-def pairs_comp(subs_pair, sequences, begin, length, i):
-    last_pos = []
-    for pair in range(subs_pair):
-            last_pos.append(find_longes_prefix(sequences[0][begin:begin+length], sequences[i][pair:]))
-            if last_pos[pair] == len(sequences[0][begin:length+begin]):
-                break    
-    return max(last_pos)
+def strings_comparison(needle, haystack):
+    for c, template_string in enumerate(needle):
+        last_pos = []
+        haystack_len = len(haystack)
+        for begin in range(haystack_len):
+            last_pos.append(find_longes_prefix(template_string, haystack, haystack_len, begin))
+        needle[c] = template_string[:max(last_pos)]
+    return needle
 
 
 def main():
-    records = list(SeqIO.parse("rosalind_gc.txt", "fasta"))
+    records = list(SeqIO.parse("rosalind_lcsm.txt", "fasta"))
     sequences = sorted([record.seq for record in records], key=len)
-    start = make_subs(len(sequences[0]))
-    for i in range(1, len(sequences)):
-        subs_pair = len(sequences[i])
-        for c, (begin, length) in enumerate(start):
-            start[c][1] = pairs_comp(subs_pair, sequences, begin, length, i)
-    position = max(start, key=lambda x: x[1])
-    print(sequences[0][position[0]:position[0]+position[1]])
-
+    for i, string in enumerate(sequences):
+        if i == 0:
+            needle = make_subs(sequences[0])
+        elif i == 1:
+            needle = strings_comparison(needle, string)
+        else:
+            needle = [a[0] for a in itertools.groupby(sorted(strings_comparison(needle, string)))]
+    print(max(needle, key=len))
+       
 
 if __name__ == '__main__':
     main()
+    
