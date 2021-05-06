@@ -1,6 +1,6 @@
 #Finding a Protein Motif http://rosalind.info/problems/mprt/
-from Bio import ExPASy, SwissProt
 import re
+from Bio import ExPASy, SwissProt
 
 
 def download_sequences(accessions):
