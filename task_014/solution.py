@@ -1,6 +1,9 @@
 #Finding a Shared Motif http://rosalind.info/problems/lcsm/
-from Bio import SeqIO
+#Run with "-m task_014.solution"
 import itertools
+import sys
+from Bio import SeqIO
+from my_utils import my_timer
 
 
 def make_subs(sequence):
@@ -10,7 +13,7 @@ def make_subs(sequence):
     return substrings
 
     
-def find_longes_prefix(template_string, haystack, haystack_len, begin):
+def find_longes_prefix(template_string, haystack, begin, haystack_len):
     for i, letter_template in enumerate(template_string):
         if haystack_len > begin+i:
             if letter_template != haystack[begin+i]:
@@ -22,20 +25,20 @@ def strings_comparison(needle, haystack):
     for c, template_string in enumerate(needle):
         last_pos = []
         haystack_len = len(haystack)
+        new_needle = needle
         for begin in range(haystack_len):
-            last_pos.append(find_longes_prefix(template_string, haystack, haystack_len, begin))
-        needle[c] = template_string[:max(last_pos)]
-    return needle
+            last_pos.append(find_longes_prefix(template_string, haystack, begin, haystack_len))
+        new_needle[c] = template_string[:max(last_pos)]
+    return new_needle
 
 
+@my_timer
 def main():
     records = list(SeqIO.parse("rosalind_lcsm.txt", "fasta"))
     sequences = sorted([record.seq for record in records], key=len)
     for i, string in enumerate(sequences):
         if i == 0:
             needle = make_subs(sequences[0])
-        elif i == 1:
-            needle = strings_comparison(needle, string)
         else:
             needle = [a[0] for a in itertools.groupby(sorted(strings_comparison(needle, string)))]
     print(max(needle, key=len))
