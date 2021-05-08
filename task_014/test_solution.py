@@ -10,12 +10,13 @@ def test_make_subs():
 
 
 def test_find_longes_prefix():
-    assert find_longes_prefix('AT', 'AAATTTT', 7, 1) == 1
-    assert find_longes_prefix('T', 'AAATTTT', 7, 0) == 0
-    assert find_longes_prefix('GCCC', 'GGGGGG', 6, 0) == 1
-    assert find_longes_prefix('C', 'TAAAAAA', 7, 0) == 0
+    assert find_longes_prefix('AT', 'AAATTTT', 1, 7) == 1
+    assert find_longes_prefix('T', 'AAATTTT', 0, 7) == 0
+    assert find_longes_prefix('GCCC', 'GGGGGG', 0, 6) == 1
+    assert find_longes_prefix('C', 'TAAAAAA', 0, 7) == 0
 
 
 def test_strings_comparison():
     assert sorted(strings_comparison(['ATACA', 'TACA', 'ACA', 'CA', 'A'], 
                                         'TAGACCA'), key=len) == ['A', 'TA', 'CA', 'ACA', 'ATACA']
+                                        
