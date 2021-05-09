@@ -17,6 +17,6 @@ def test_find_longes_prefix():
 
 
 def test_strings_comparison():
-    assert sorted(strings_comparison(['ATACA', 'TACA', 'ACA', 'CA', 'A'], 
-                                        'TAGACCA'), key=len) == ['A', 'TA', 'CA', 'ACA', 'ATACA']
+    assert strings_comparison(['ATACA', 'TACA', 'ACA', 'CA', 'A'],
+                            'TAGACCA') == sorted(['A', 'TA', 'CA', 'AC'])
                                         
