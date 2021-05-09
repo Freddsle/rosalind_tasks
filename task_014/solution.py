@@ -1,7 +1,6 @@
 #Finding a Shared Motif http://rosalind.info/problems/lcsm/
 #Run with "python -m task_014.solution"
 import itertools
-import sys
 from Bio import SeqIO
 from my_utils import my_timer
 
