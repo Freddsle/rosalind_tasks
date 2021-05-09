@@ -14,39 +14,41 @@ def make_subs(sequence):
 
  
 def find_longes_prefix(needle, needle_positions, haystack, begin_haystack, len_haystack):
-    for i, k in zip(range(needle_positions[0], needle_positions[0]+needle_positions[1]), 
-                    range(needle_positions[0] + needle_positions[1])):
-        if len_haystack > begin_haystack+k:
-            if needle[i] != haystack[begin_haystack+k]:
-                return k
-        elif len_haystack == begin_haystack+k:
-            return k
-    return k + 1
+    for i, j in zip(range(needle_positions[0], needle_positions[0] + needle_positions[1]), 
+                    range(begin_haystack, len_haystack)):
+        if needle[i] != haystack[j]:
+            return i - needle_positions[0]
+    return i - needle_positions[0] + 1
 
 
 def strings_comparison(needle, needle_positions, haystack):
-    last_pos = []
+    result = -1
     len_haystack = len(haystack)
+
     for begin_haystack in range(len_haystack):
-        last_pos.append(find_longes_prefix(needle, needle_positions, haystack, 
-                        begin_haystack, len_haystack))
-    return max(last_pos)
+        length = find_longes_prefix(needle, 
+                                    needle_positions, 
+                                    haystack, 
+                                    begin_haystack, 
+                                    len_haystack)
+        result = max(result, length)
+
+    return result
 
 
 @my_timer
 def main():
     records = list(SeqIO.parse("rosalind_lcsm.txt", "fasta"))
+    # records = list(SeqIO.parse("dna.txt", "fasta"))
     sequences = sorted([record.seq for record in records], key=len)
     
+    substrings = make_subs(sequences[0])
+    needle = sequences[0]
+
     for i, string in enumerate(sequences):
-        if i == 0:
-            substrings = make_subs(sequences[0])
-            needle = sequences[0]
-        else:
-            for c, needle_positions in enumerate(substrings):
-                if substrings[c][1] > 0:
-                    print(strings_comparison(needle, needle_positions, string))
-                    substrings[c][1] = strings_comparison(needle, needle_positions, string)
+        if i > 1:
+            for needle_positions in substrings:
+                needle_positions[1] = strings_comparison(needle, needle_positions, string)
     
     position = max(substrings, key=lambda x: x[1])
     print(sequences[0][position[0]:position[0]+position[1]])

@@ -27,17 +27,16 @@ def strings_comparison(needle, haystack):
     for c, template_string in enumerate(needle):
         last_pos = []
         haystack_len = len(haystack)
-        new_needle = needle
         for begin in range(haystack_len):
             last_pos.append(find_longes_prefix(template_string, haystack, begin, haystack_len))
-        new_needle[c] = template_string[:max(last_pos)]
-    return [a[0] for a in itertools.groupby(sorted(new_needle))]
+        needle[c] = template_string[:max(last_pos)]
+    return [a[0] for a in itertools.groupby(sorted(needle))]
 
 
 @my_timer
 def main():
-    # records = list(SeqIO.parse("rosalind_lcsm.txt", "fasta"))
-    records = list(SeqIO.parse("dna.txt", "fasta"))
+    records = list(SeqIO.parse("rosalind_lcsm.txt", "fasta"))
+    # records = list(SeqIO.parse("dna.txt", "fasta"))
     sequences = sorted([record.seq for record in records], key=len)
     for i, string in enumerate(sequences):
         if i == 0:
