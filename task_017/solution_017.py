@@ -8,7 +8,7 @@ def codon_counter(protein, modulo):
     rna_with_stop = 3
     for amino_acid in protein:
         rna_with_stop = rna_with_stop * codons[amino_acid] % modulo
-
+        
     return rna_with_stop
 
 def main():
